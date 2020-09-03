@@ -62,7 +62,8 @@ class signIn extends Component {
                 });
 
                 await AsyncStorage.setItem('@DeAliceApp:token', response.data.token);
-                await AsyncStorage.setItem('@DeAliceApp:user', response.data.user._id);
+                // await AsyncStorage.setItem('@DeAliceApp:user', response.data.user._id);
+                await AsyncStorage.setItem('@DeAliceApp:onboard', JSON.stringify({ hasOnboarded: true }));
 
                 const resetAction = StackActions.reset({
                     index: 0,

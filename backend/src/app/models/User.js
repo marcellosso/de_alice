@@ -18,10 +18,37 @@ const UserSchema = new mongoose.Schema({
         required: true,
         select: false,
     },
-    // address: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Address'
-    // },
+    address: {
+        logradouro: {
+            type: String,
+            default: "",
+            lowercase: true,
+        },
+        complemento: {
+            type: String,
+            default: "",
+            lowercase: true,
+        },
+        bairro: {
+            type: String,
+            default: "",
+            lowercase: true,
+        },
+        estado: {
+            type: String,
+            default: "",
+            lowercase: true
+        },
+        cidade: {
+            type: String,
+            default: "",
+            lowercase: true,
+        },
+        cep: {
+            type: String,
+            default: "",
+        },
+    },
     passwordResetToken: {
         type: String,
         select: false

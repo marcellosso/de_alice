@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const Address = require('../models/Address');
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -38,6 +37,31 @@ module.exports = {
         }
     },
 
+    async updateAddress(req, res) {
+        const { email, logradouro, complemento, bairro, estado, cidade, cep } = req.body;
+
+        try {
+
+            const user = await User.findOne({ email });
+
+            user.address.logradouro = logradouro;
+            user.address.complemento = complemento;
+            user.address.bairro = bairro;
+            user.address.estado = estado;
+            user.address.cidade = cidade;
+            user.address.cep = cep;
+
+            await User.findByIdAndUpdate(user._id, user);
+
+
+            return res.send({ user });
+
+        } catch (e) {
+            console.log(e);
+            return res.status(400).send({ error: 'Falha ao cadastrar endereço' })
+        }
+    },
+
     async index(req, res) {
         const users = await User.find();
 
@@ -59,9 +83,10 @@ module.exports = {
     },
 
     async indexOne(req, res) {
-        const { id } = req.body;
 
-        const user = await User.findOne({ _id: id });
+        const userId = req.userId;
+
+        const user = await User.findOne({ _id: userId });
 
 
         if (!user) {
@@ -159,14 +184,14 @@ module.exports = {
                 return res.status(400).send({ error: 'Usuário não encontrado' });
             }
 
-            if(token !== user.passwordResetToken){
+            if (token !== user.passwordResetToken) {
                 return res.status(400).send({ error: 'Token inválido' });
             }
 
             const now = new Date();
 
-            if (now > user.passwordResetExpires){
-                return res.status(400).send({ error: 'Token expirado, gere um novo'});
+            if (now > user.passwordResetExpires) {
+                return res.status(400).send({ error: 'Token expirado, gere um novo' });
             }
 
             user.password = password;

@@ -62,9 +62,11 @@ class signUp extends Component {
                     password: this.state.password,
                 });
 
-                this.setState({ success: 'Conta criada com sucesso! Redirecionando para o login', error: '' });
-
-                setTimeout(this.goToLogin, 2500);
+                // this.setState({ success: 'Conta criada com sucesso! Redirecionando para o login', error: '' });
+                this.setState({ success: 'Conta criada com sucesso!', error: '' });
+                
+                // setTimeout(this.goToLogin, 2500);
+                setTimeout(this.goToAddress, 2500);
             } catch (e) {
                 this.setState({ error: e.response.data.error });
             }
@@ -80,6 +82,10 @@ class signUp extends Component {
         // });
         // this.props.navigation.dispatch(resetAction);
         this.props.navigation.navigate('SignIn');
+    }
+
+    goToAddress = () => {
+        this.props.navigation.navigate('SignUpAddress');
     }
 
     render() {

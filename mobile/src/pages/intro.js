@@ -16,6 +16,7 @@ import {
 import Svg, { Path } from 'react-native-svg'
 import PropTypes from 'prop-types';
 import { isSignedIn } from '../services/auth';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 class intro extends Component {
@@ -67,8 +68,10 @@ class intro extends Component {
         }).start()
     }
 
-    changeScreen = () => {
-        this.props.navigation.navigate('Menu');
+    changeScreen = async () => {
+        let onboard = await AsyncStorage.getItem('@DeAliceApp:onboard');
+        if(onboard) this.props.navigation.navigate('Menu');
+        else this.props.navigation.navigate('Onboarding');
     }
 
     render() {

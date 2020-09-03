@@ -30,12 +30,9 @@ class main extends Component {
     };
 
     UNSAFE_componentWillMount = async () => {
-        const userId = await AsyncStorage.getItem('@DeAliceApp:user');
 
         try {
-            const response = await api.post('/user', {
-                id: userId
-            });
+            const response = await api.get('/user');
 
             this.setState({ username: response.data.user.name });
         } catch (e){
@@ -48,7 +45,7 @@ class main extends Component {
 
         try {
             await AsyncStorage.removeItem('@DeAliceApp:token');
-            await AsyncStorage.removeItem('@DeAliceApp:user');
+            // await AsyncStorage.removeItem('@DeAliceApp:user');
 
             const resetAction = StackActions.reset({
                 index: 0,
